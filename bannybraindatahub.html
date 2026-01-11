@@ -1,151 +1,350 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="encode
 <head>
 <meta charset="UTF-8">
-<title>Bannybrain Data Hub</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bannybrain Data Hub</title>
+<link rel="manifest" href="manifest.json">
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <style>
-* { box-sizing: border-box; scroll-behavior: smooth; }
-body { margin:0; font-family: Arial, Helvetica, sans-serif; background:#0f2027; color:#fff;}
-header { background: linear-gradient(90deg, gold, silver); position: fixed; top:0; width:100%; z-index:1000; }
-header nav { display:flex; justify-content:center; padding:15px 0; }
-header nav a { color:#000; margin:0 20px; text-decoration:none; font-weight:bold; font-size:16px; }
-header nav a:hover { color:#ff9800; }
-section { padding:100px 20px 60px 20px; min-height:100vh; }
-.logo { width:150px; height:150px; border-radius:50%; margin:20px auto; background: linear-gradient(135deg,gold,silver,#ff9800,#00ff99); display:flex; align-items:center; justify-content:center; font-weight:900; color:#000; box-shadow:0 0 30px gold; text-align:center; font-size:18px; }
-h2 { text-align:center; color:gold; margin-bottom:20px; }
-.container { max-width:700px; margin:auto; background:#111; border-radius:15px; padding:25px; box-shadow:0 0 25px rgba(255,215,0,0.35); color:#fff; }
-label { display:block; margin-top:15px; font-weight:bold; color:silver; }
-input, select { width:100%; padding:12px; margin-top:6px; border-radius:8px; border:none; font-size:16px; }
-button { width:100%; margin-top:25px; padding:15px; background: linear-gradient(90deg,gold,silver,#00ff99,#ff00cc); border:none; border-radius:30px; font-size:18px; font-weight:bold; cursor:pointer; }
-button:hover { opacity:0.9; }
-ul.services li { list-style:none; padding:10px; margin:6px 0; border-radius:8px; background: linear-gradient(90deg,#ff512f,#dd2476,#24c6dc,#ffeb3b,#00ff6a); font-weight:bold; color:#000; }
-footer { text-align:center; padding:20px; background:#111; color:#ccc; }
-#success-section { display:none; padding:40px 20px; }
-.success-box { background:#0a3d62; padding:30px; border-radius:15px; text-align:center; box-shadow:0 0 30px rgba(0,255,0,0.45); }
+:root{
+  --bg-light:#f4f6fb;
+  --bg-dark:#0e1117;
+  --card-light:#ffffff;
+  --card-dark:#161b22;
+  --text-light:#111;
+  --text-dark:#f5f5f5;
+  --gold:#d4af37;
+  --silver:#c0c0c0;
+  --btn-blue:#007bff;
+}
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:var(--bg-light);
+  color:var(--text-light);
+  transition:.3s;
+}
+body.dark{
+  background:var(--bg-dark);
+  color:var(--text-dark);
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px;
+  background:linear-gradient(90deg,var(--gold),var(--silver));
+  font-weight:bold;
+  color:#000;
+}
+.toggle{
+  font-size:22px;
+  cursor:pointer;
+}
+.container{
+  max-width:500px;
+  margin:auto;
+  padding:15px;
+}
+h2{
+  margin:20px 0 10px;
+  font-size:18px;
+}
+.motto{
+  text-align:center;
+  font-weight:bold;
+  font-size:16px;
+  margin-top:10px;
+  color:#333;
+}
+body.dark .motto{color:#f5f5f5;}
+.networks{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.network-card{
+  flex:1 1 30%;
+  text-align:center;
+  padding:12px;
+  border-radius:10px;
+  cursor:pointer;
+  color:#fff;
+  font-weight:bold;
+  transition:.3s;
+  font-size:14px;
+}
+.network-card:hover{transform:scale(1.05);}
+.network-mtn{background:#ffcc00;color:#000;}
+.network-telecel{background:#e60000;}
+.network-at{background:#7a1fa2;}
+.packages{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:20px;
+}
+.package{
+  background:var(--card-light);
+  color:var(--text-light);
+  padding:15px;
+  border-radius:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:14px;
+}
+body.dark .package{
+  background:var(--card-dark);
+  color:var(--text-dark);
+}
+.buy-btn{
+  background:var(--btn-blue);
+  color:#fff;
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:14px;
+}
+.buy-btn:hover{opacity:.85;}
+.hidden{display:none;}
+section{
+  margin-top:20px;
+}
+a.link{
+  display:inline-block;
+  margin-top:10px;
+  color:var(--btn-blue);
+  text-decoration:none;
+  font-weight:bold;
+}
+footer{
+  text-align:center;
+  margin:20px 0;
+  opacity:.7;
+  font-size:12px;
+}
+/* Reseller Tab */
+#resellerTab{
+  position:fixed;
+  bottom:10px;
+  right:10px;
+  background:var(--gold);
+  color:#000;
+  padding:10px 12px;
+  border-radius:20px;
+  cursor:pointer;
+  z-index:1000;
+  font-weight:bold;
+  box-shadow:0 2px 5px rgba(0,0,0,0.3);
+}
+#resellerForm{
+  position:fixed;
+  bottom:50px;
+  right:10px;
+  background:var(--card-light);
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.3);
+  display:none;
+  max-width:300px;
+  z-index:1000;
+}
+body.dark #resellerForm{
+  background:var(--card-dark);
+  color:var(--text-dark);
+}
+/* Services Section */
+.services{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:space-around;
+  margin-top:15px;
+}
+.service-card{
+  flex:1 1 45%;
+  background:var(--card-light);
+  padding:10px;
+  border-radius:12px;
+  text-align:center;
+  font-size:14px;
+}
+body.dark .service-card{
+  background:var(--card-dark);
+  color:var(--text-dark);
+}
+/* Success Message */
+#successMsg{
+  display:none;
+  padding:20px;
+  background:var(--gold);
+  border-radius:12px;
+  text-align:center;
+  font-weight:bold;
+  font-size:16px;
+  margin-top:20px;
+}
+body.dark #successMsg{
+  background:#ffaa00;
+  color:#000;
+}
+/* Responsive */
+@media(max-width:500px){
+  .network-card{flex:1 1 30%;}
+  .package{flex:1 1 100%;}
+  .service-card{flex:1 1 100%;}
+}
 </style>
 </head>
 <body>
 
 <header>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#buy">Buy</a>
-    <a href="#contact">Contact</a>
-  </nav>
+  <div>💡 Bannybrain Data Hub</div>
+  <div class="toggle" id="modeToggle">🌙</div>
 </header>
 
-<section id="home">
-  <div class="logo">Bannybrain<br>Data Hub</div>
+<div class="container">
+
+<div class="motto">🚀 Fast • Reliable • Affordable — Your Trusted Data Hub!</div>
+
+<h2>Select Network</h2>
+<div class="networks">
+  <div class="network-card network-mtn" onclick="showNetwork('mtn')">MTN</div>
+  <div class="network-card network-telecel" onclick="showNetwork('telecel')">Telecel</div>
+  <div class="network-card network-at" onclick="showNetwork('at')">AirtelTigo</div>
+</div>
+
+<input type="text" id="customerMsg" placeholder="Add a message (optional)" style="width:100%;padding:8px;border-radius:6px;margin-bottom:10px;">
+
+<div id="packagesContainer" class="packages"></div>
+
+<div id="successMsg"></div>
+
+<section>
+<h2>Our Services</h2>
+<div class="services">
+  <div class="service-card">📱 Mobile Data Top-Up</div>
+  <div class="service-card">💬 WhatsApp Support 24/7</div>
+  <div class="service-card">🤝 Reseller Program</div>
+  <div class="service-card">💳 Secure Payments</div>
+</div>
 </section>
 
-<section id="about" style="background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);">
-  <div class="container">
-    <h2>About Us</h2>
-    <p>We provide fast, affordable, and reliable data bundles across all major networks in Ghana. Your payment is secure and delivery is instant.</p>
-  </div>
-</section>
-
-<section id="services" style="background:#222;">
-  <div class="container">
-    <h2>Our Services</h2>
-    <ul class="services">
-      <li>MTN Data Bundles</li>
-      <li>Telecel Data Bundles</li>
-      <li>AirtelTigo Data Bundles</li>
-      <li>Bulk & Retail Data</li>
-      <li>Instant Delivery</li>
-    </ul>
-  </div>
-</section>
-
-<section id="buy" style="background: linear-gradient(135deg,#2c5364,#203a43,#0f2027);">
-  <div id="main-section" class="container">
-    <h2>Buy Data Bundle</h2>
-
-    <label>Full Name</label>
-    <input type="text" id="name" placeholder="Enter your name">
-
-    <label>Select Network</label>
-    <select id="network">
-      <option value="">-- Select Network --</option>
-      <option>MTN</option>
-      <option>Telecel</option>
-      <option>AirtelTigo</option>
-    </select>
-
-    <label>Select Data Bundle</label>
-    <select id="amount">
-      <option value="">-- Choose Data Bundle --</option>
-      <option value="5">1GB – GHS 5</option>
-      <option value="9">2GB – GHS 9</option>
-      <option value="15">3GB – GHS 15</option>
-      <option value="25">5GB – GHS 25</option>
-    </select>
-
-    <button onclick="payWithPaystack()">Pay Now</button>
-    <div class="note">No email required • Secure Paystack payment</div>
-  </div>
-
-  <div id="success-section">
-    <div class="container success-box">
-      <h2>Payment Successful!</h2>
-      <p>Thank you for choosing <b>Bannybrain Data Hub</b>.</p>
-      <p>WhatsApp confirmation is opening…</p>
-    </div>
-  </div>
-</section>
-
-<section id="contact" style="background:#222;">
-  <div class="container">
-    <h2>Contact Us</h2>
-    <p>Call: 0533831200 / 0592066924</p>
-    <p>Email: herbertessel75@gmail.com</p>
-  </div>
+<section>
+<h2>Why Buy From Us?</h2>
+<p>
+✅ Fast & reliable delivery<br>
+✅ Affordable & transparent pricing<br>
+✅ Trusted by many customers<br>
+✅ Instant support via WhatsApp
+</p>
 </section>
 
 <footer>
-  © 2026 Bannybrain Data Hub | All Rights Reserved
+© 2026 Bannybrain Data Hub
 </footer>
 
+<!-- Reseller Floating Tab -->
+<div id="resellerTab" onclick="toggleReseller()">🤝 Reseller</div>
+
+<div id="resellerForm">
+  <h3>Become a Reseller</h3>
+  <input type="text" id="resellerName" placeholder="Your Name" style="width:100%;margin-bottom:5px;padding:6px;">
+  <input type="text" id="resellerPhone" placeholder="Phone Number" style="width:100%;margin-bottom:5px;padding:6px;">
+  <input type="text" id="resellerEmail" placeholder="Email (optional)" style="width:100%;margin-bottom:5px;padding:6px;">
+  <button class="buy-btn" onclick="submitReseller()">Submit</button>
+  <button class="buy-btn" style="background:#ccc;color:#000;margin-left:5px;" onclick="closeReseller()">Close</button>
+</div>
+
 <script>
-function payWithPaystack(){
-  const name = document.getElementById("name").value;
-  const network = document.getElementById("network").value;
-  const amount = document.getElementById("amount").value;
+// Dark/Light mode toggle
+const toggle = document.getElementById("modeToggle");
+toggle.addEventListener("click",()=>{
+  document.body.classList.toggle("dark");
+  toggle.textContent = document.body.classList.contains("dark")?"☀️":"🌙";
+});
 
-  if(!name || !network || !amount){
-    alert("Please fill all fields");
-    return;
+// Packages data
+const dataPackages={
+  mtn: { "1GB":5,"2GB":9.8,"3GB":14.5,"4GB":19,"5GB":24.3,"6GB":28,"8GB":36,"10GB":45,"15GB":67,"20GB":85,"25GB":106,"30GB":127,"40GB":165,"50GB":215 },
+  telecel: {"10GB":42,"12GB":48,"15GB":60,"20GB":80,"25GB":95,"30GB":125,"35GB":140,"40GB":155,"45GB":170,"50GB":195,"100GB":375},
+  at: {"1GB":4.5,"2GB":9.5,"3GB":14.9,"4GB":18.5,"5GB":23,"6GB":25.9,"8GB":34.2,"10GB":43,"12GB":48.5,"15GB":61.5,"25GB":103,"30GB":120.5,"50GB":200}
+};
+
+function showNetwork(network){
+  const container=document.getElementById("packagesContainer");
+  container.innerHTML="";
+  for(let gb in dataPackages[network]){
+    const price=dataPackages[network][gb];
+    const div=document.createElement("div");
+    div.className="package";
+    div.innerHTML=`<span>${gb} - GHS ${price}</span> <button class="buy-btn" onclick="pay('${network}','${gb}',${price})">Buy</button>`;
+    container.appendChild(div);
   }
+}
 
+// Payment function
+function pay(network,gb,price){
+  let phone=prompt("Enter phone number");
+  if(!phone) return;
+  let customerMessage=document.getElementById("customerMsg").value||"";
   PaystackPop.setup({
-    key: "pk_live_eb959a37fda20b29c2ec0737c35007bfc78b1a6e",
-    email: "herbertessel75@gmail.com",
-    amount: amount * 100,
-    currency: "GHS",
-    callback: function(response){
-      const phone1 = "233533831200";
-      const phone2 = "233592066924";
-      const message = `Bannybrain Data Hub
-Name: ${name}
-Network: ${network}
-Data Bundle: GHS ${amount}
-Reference: ${response.reference}
+    key:"pk_live_eb959a37fda20b29c2ec0737c35007bfc78b1a6e",
+    email:"herbertessel75@gmail.com",
+    amount:price*100,
+    currency:"GHS",
+    metadata:{custom_fields:[{display_name:"Network",value:network},{display_name:"Bundle",value:gb},{display_name:"Phone",value:phone},{display_name:"Customer Message",value:customerMessage}]},
+    callback:function(){
+      document.getElementById("packagesContainer").style.display="none";
+      const msg=document.getElementById("successMsg");
+      msg.style.display="block";
+      msg.style.background="#d4af37";
+      msg.innerHTML=`🎉 Payment Successful!<br>Thank you for your purchase. Your data will be delivered shortly. ✅`;
 
-Payment completed. Please send my data bundle.`;
-
-      window.open(`https://wa.me/${phone1}?text=${encodeURIComponent(message)}`, "_blank");
-      setTimeout(() => { window.open(`https://wa.me/${phone2}?text=${encodeURIComponent(message)}`, "_blank"); }, 1000);
-
-      document.getElementById("main-section").style.display="none";
-      document.getElementById("success-section").style.display="block";
+      // WhatsApp alerts to both numbers
+      const numbers=["233533831200","233592066924"];
+      const waText=`New purchase: ${network} ${gb} - Phone: ${phone} - Message: ${customerMessage}`;
+      numbers.forEach(num=>{
+        window.open(`https://wa.me/${num}?text=${encodeURIComponent(waText)}`,"_blank");
+      });
     },
-    onClose: function(){ alert("Payment cancelled"); }
+    onClose:function(){
+      const msg=document.getElementById("successMsg");
+      msg.style.display="block";
+      msg.style.background="#ff4d4d";
+      msg.innerHTML="❌ Payment not completed or cancelled. Please try again.";
+    }
   }).openIframe();
+}
+
+// Reseller form functions
+function toggleReseller(){
+  const form=document.getElementById("resellerForm");
+  form.style.display=form.style.display==="block"?"none":"block";
+}
+function closeReseller(){document.getElementById("resellerForm").style.display="none";}
+function submitReseller(){
+  const name=document.getElementById("resellerName").value.trim();
+  const phone=document.getElementById("resellerPhone").value.trim();
+  const email=document.getElementById("resellerEmail").value.trim();
+  if(!name || !phone){alert("Please enter your name and phone number.");return;}
+  document.getElementById("resellerForm").innerHTML=`<p>🎉 Thank you ${name}! We will contact you shortly to become a reseller.</p>`;
+  const waNumber="233533831200";
+  const msg=`New reseller registration: ${name}, Phone: ${phone}, Email: ${email}`;
+  window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`,"_blank");
+}
+</script>
+
+<script>
+// Register Service Worker
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js').then(()=>{
+    console.log("Service Worker registered successfully.");
+  });
 }
 </script>
 
